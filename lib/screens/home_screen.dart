@@ -4,7 +4,6 @@ import '../bloc/news_bloc.dart';
 import '../bloc/news_event.dart';
 import '../bloc/news_state.dart';
 import '../widgets/news_list.dart';
-import '../widgets/category_tabs.dart';
 import '../widgets/search_bar_widget.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/loading_widget.dart';

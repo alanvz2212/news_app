@@ -1,33 +1,33 @@
 // To parse this JSON data, do
 //
-//     final welcome = welcomeFromJson(jsonString);
+//     final newsResponse = newsResponseFromJson(jsonString);
 
 import 'dart:convert';
 
-List<Welcome> welcomeFromJson(String str) =>
-    List<Welcome>.from(json.decode(str).map((x) => Welcome.fromJson(x)));
+NewsResponse newsResponseFromJson(String str) =>
+    NewsResponse.fromJson(json.decode(str));
 
-String welcomeToJson(List<Welcome> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String newsResponseToJson(NewsResponse data) =>
+    json.encode(data.toJson());
 
-class Welcome {
+class NewsResponse {
   String? status;
   int? totalResults;
   List<Article>? articles;
 
-  Welcome({this.status, this.totalResults, this.articles});
+  NewsResponse({this.status, this.totalResults, this.articles});
 
-  Welcome copyWith({
+  NewsResponse copyWith({
     String? status,
     int? totalResults,
     List<Article>? articles,
-  }) => Welcome(
+  }) => NewsResponse(
     status: status ?? this.status,
     totalResults: totalResults ?? this.totalResults,
     articles: articles ?? this.articles,
   );
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory NewsResponse.fromJson(Map<String, dynamic> json) => NewsResponse(
     status: json["status"],
     totalResults: json["totalResults"],
     articles: json["articles"] == null

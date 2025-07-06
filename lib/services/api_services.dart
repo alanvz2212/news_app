@@ -24,7 +24,7 @@ class ApiService {
   /// [q] - Keywords or phrases to search for
   /// [pageSize] - Number of results to return per page (max 100)
   /// [page] - Page number to retrieve
-  Future<ApiResponse<Welcome>> getTopHeadlines({
+  Future<ApiResponse<NewsResponse>> getTopHeadlines({
     String? country,
     String? category,
     String? sources,
@@ -50,9 +50,9 @@ class ApiService {
 
       final response = await _client.get(uri).timeout(_timeout);
 
-      return _handleResponse<Welcome>(
+      return _handleResponse<NewsResponse>(
         response,
-        (json) => Welcome.fromJson(json),
+        (json) => NewsResponse.fromJson(json),
       );
     } catch (e) {
       return ApiResponse.error(_handleError(e));
@@ -71,7 +71,7 @@ class ApiService {
   /// [sortBy] - Sort order (relevancy, popularity, publishedAt)
   /// [pageSize] - Number of results to return per page (max 100)
   /// [page] - Page number to retrieve
-  Future<ApiResponse<Welcome>> searchEverything({
+  Future<ApiResponse<NewsResponse>> searchEverything({
     required String q,
     String? searchIn,
     String? sources,
@@ -108,9 +108,9 @@ class ApiService {
 
       final response = await _client.get(uri).timeout(_timeout);
 
-      return _handleResponse<Welcome>(
+      return _handleResponse<NewsResponse>(
         response,
-        (json) => Welcome.fromJson(json),
+        (json) => NewsResponse.fromJson(json),
       );
     } catch (e) {
       return ApiResponse.error(_handleError(e));

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/news_model.dart';
 import '../widgets/news_card.dart';
-import '../widgets/loading_widget.dart';
 
 class NewsList extends StatelessWidget {
   final List<Article> articles;

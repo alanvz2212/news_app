@@ -15,8 +15,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20, max: 100)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing the news data or error
-  Future<ApiResponse<Welcome>> getTopHeadlines({
+  /// Returns: [ApiResponse<NewsResponse>] containing the news data or error
+  Future<ApiResponse<NewsResponse>> getTopHeadlines({
     String? country,
     String? category,
     String? sources,
@@ -40,8 +40,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20, max: 100)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing the search results or error
-  Future<ApiResponse<Welcome>> searchNews({
+  /// Returns: [ApiResponse<NewsResponse>] containing the search results or error
+  Future<ApiResponse<NewsResponse>> searchNews({
     required String q,
     String? searchIn,
     String? sources,
@@ -77,8 +77,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing category news or error
-  Future<ApiResponse<Welcome>> getNewsByCategory({
+  /// Returns: [ApiResponse<NewsResponse>] containing category news or error
+  Future<ApiResponse<NewsResponse>> getNewsByCategory({
     required String category,
     String? country,
     int pageSize = 20,
@@ -92,8 +92,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing source-specific news or error
-  Future<ApiResponse<Welcome>> getNewsBySources({
+  /// Returns: [ApiResponse<NewsResponse>] containing source-specific news or error
+  Future<ApiResponse<NewsResponse>> getNewsBySources({
     required String sources,
     int pageSize = 20,
     int page = 1,
@@ -107,8 +107,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing trending news or error
-  Future<ApiResponse<Welcome>> getTrendingNews({
+  /// Returns: [ApiResponse<NewsResponse>] containing trending news or error
+  Future<ApiResponse<NewsResponse>> getTrendingNews({
     String? country,
     String? category,
     int pageSize = 20,
@@ -126,8 +126,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing date-filtered news or error
-  Future<ApiResponse<Welcome>> searchNewsByDateRange({
+  /// Returns: [ApiResponse<NewsResponse>] containing date-filtered news or error
+  Future<ApiResponse<NewsResponse>> searchNewsByDateRange({
     required String query,
     required DateTime fromDate,
     required DateTime toDate,
@@ -147,8 +147,8 @@ abstract class NewsRepository {
   /// - [pageSize]: Number of results to return per page (default: 20)
   /// - [page]: Page number to retrieve (default: 1)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing domain-specific news or error
-  Future<ApiResponse<Welcome>> getNewsByDomains({
+  /// Returns: [ApiResponse<NewsResponse>] containing domain-specific news or error
+  Future<ApiResponse<NewsResponse>> getNewsByDomains({
     required String domains,
     String? query,
     String? language,
@@ -175,8 +175,8 @@ abstract class NewsRepository {
   /// Parameters:
   /// - [key]: Cache key to retrieve
   /// 
-  /// Returns: [Welcome?] cached news data or null if not found/expired
-  Future<Welcome?> getCachedData(String key);
+  /// Returns: [NewsResponse?] cached news data or null if not found/expired
+  Future<NewsResponse?> getCachedData(String key);
 
   /// Cache news data
   /// 
@@ -184,7 +184,7 @@ abstract class NewsRepository {
   /// - [key]: Cache key to store under
   /// - [data]: News data to cache
   /// - [duration]: How long to keep the cache (optional)
-  Future<void> cacheData(String key, Welcome data, {Duration? duration});
+  Future<void> cacheData(String key, NewsResponse data, {Duration? duration});
 
   /// Offline support methods
   
@@ -195,8 +195,8 @@ abstract class NewsRepository {
 
   /// Get offline news (cached/stored locally)
   /// 
-  /// Returns: [ApiResponse<Welcome>] containing offline news or error
-  Future<ApiResponse<Welcome>> getOfflineNews();
+  /// Returns: [ApiResponse<NewsResponse>] containing offline news or error
+  Future<ApiResponse<NewsResponse>> getOfflineNews();
 
   /// Save news for offline reading
   /// 

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
 import '../models/news_model.dart';
 import '../repository/news_repo.dart';
@@ -530,7 +529,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       emit(NewsLoadingMore(currentArticles: currentState.articles));
 
       try {
-        ApiResponse<Welcome>? response;
+        ApiResponse<NewsResponse>? response;
         final nextPage = currentState.currentPage + 1;
 
         // Determine which API call to make based on current parameters
@@ -582,7 +581,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
           );
         }
 
-        if (response != null && response.isSuccess && response.data != null) {
+        if (response.isSuccess && response.data != null) {
           final newArticles = response.data!.articles ?? [];
           final allArticles = [...currentState.articles, ...newArticles];
 
@@ -594,8 +593,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
           ));
         } else {
           emit(NewsError(
-            message: response?.error?.message ?? 'Failed to load more articles',
-            errorCode: response?.error?.code ?? 'unknown_error',
+            message: response.error?.message ?? 'Failed to load more articles',
+            errorCode: response.error?.code ?? 'unknown_error',
             cachedArticles: currentState.articles,
           ));
         }
