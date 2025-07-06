@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+
 List<Welcome> welcomeFromJson(String str) =>
     List<Welcome>.from(json.decode(str).map((x) => Welcome.fromJson(x)));
 

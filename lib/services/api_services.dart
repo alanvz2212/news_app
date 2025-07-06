@@ -5,8 +5,9 @@ import '../models/news_model.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://newsapi.org/v2';
-  static const String _apiKey = 'YOUR_API_KEY_HERE'; // Replace with your actual API key
-  
+  static const String _apiKey =
+      '26894c0b8d6d466abc6e4ae61ee36333'; // Replace with your actual API key
+
   // Singleton pattern
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
@@ -43,12 +44,12 @@ class ApiService {
       if (sources != null) queryParams['sources'] = sources;
       if (q != null) queryParams['q'] = q;
 
-      final uri = Uri.parse('$_baseUrl/top-headlines').replace(
-        queryParameters: queryParams,
-      );
+      final uri = Uri.parse(
+        '$_baseUrl/top-headlines',
+      ).replace(queryParameters: queryParams);
 
       final response = await _client.get(uri).timeout(_timeout);
-      
+
       return _handleResponse<Welcome>(
         response,
         (json) => Welcome.fromJson(json),
@@ -95,17 +96,18 @@ class ApiService {
       if (searchIn != null) queryParams['searchIn'] = searchIn;
       if (sources != null) queryParams['sources'] = sources;
       if (domains != null) queryParams['domains'] = domains;
-      if (excludeDomains != null) queryParams['excludeDomains'] = excludeDomains;
+      if (excludeDomains != null)
+        queryParams['excludeDomains'] = excludeDomains;
       if (from != null) queryParams['from'] = from.toIso8601String();
       if (to != null) queryParams['to'] = to.toIso8601String();
       if (language != null) queryParams['language'] = language;
 
-      final uri = Uri.parse('$_baseUrl/everything').replace(
-        queryParameters: queryParams,
-      );
+      final uri = Uri.parse(
+        '$_baseUrl/everything',
+      ).replace(queryParameters: queryParams);
 
       final response = await _client.get(uri).timeout(_timeout);
-      
+
       return _handleResponse<Welcome>(
         response,
         (json) => Welcome.fromJson(json),
@@ -125,20 +127,18 @@ class ApiService {
     String? country,
   }) async {
     try {
-      final Map<String, String> queryParams = {
-        'apiKey': _apiKey,
-      };
+      final Map<String, String> queryParams = {'apiKey': _apiKey};
 
       if (category != null) queryParams['category'] = category;
       if (language != null) queryParams['language'] = language;
       if (country != null) queryParams['country'] = country;
 
-      final uri = Uri.parse('$_baseUrl/sources').replace(
-        queryParameters: queryParams,
-      );
+      final uri = Uri.parse(
+        '$_baseUrl/sources',
+      ).replace(queryParameters: queryParams);
 
       final response = await _client.get(uri).timeout(_timeout);
-      
+
       return _handleResponse<SourcesResponse>(
         response,
         (json) => SourcesResponse.fromJson(json),
@@ -156,7 +156,7 @@ class ApiService {
     if (response.statusCode == 200) {
       try {
         final Map<String, dynamic> jsonData = json.decode(response.body);
-        
+
         // Check if API returned an error
         if (jsonData['status'] == 'error') {
           return ApiResponse.error(
@@ -166,7 +166,7 @@ class ApiService {
             ),
           );
         }
-        
+
         final data = fromJson(jsonData);
         return ApiResponse.success(data);
       } catch (e) {
@@ -190,20 +190,14 @@ class ApiService {
   /// Handle various types of errors
   ApiError _handleError(dynamic error) {
     if (error is SocketException) {
-      return ApiError(
-        code: 'network_error',
-        message: 'No internet connection',
-      );
+      return ApiError(code: 'network_error', message: 'No internet connection');
     } else if (error is HttpException) {
       return ApiError(
         code: 'http_error',
         message: 'HTTP error: ${error.message}',
       );
     } else if (error.toString().contains('TimeoutException')) {
-      return ApiError(
-        code: 'timeout_error',
-        message: 'Request timeout',
-      );
+      return ApiError(code: 'timeout_error', message: 'Request timeout');
     } else {
       return ApiError(
         code: 'unknown_error',
@@ -258,7 +252,8 @@ class SourcesResponse {
       status: json['status'],
       sources: json['sources'] != null
           ? List<NewsSource>.from(
-              json['sources'].map((x) => NewsSource.fromJson(x)))
+              json['sources'].map((x) => NewsSource.fromJson(x)),
+            )
           : null,
     );
   }
@@ -404,11 +399,7 @@ enum NewsCountry {
 }
 
 /// Sort options for search
-enum SortBy {
-  relevancy,
-  popularity,
-  publishedAt,
-}
+enum SortBy { relevancy, popularity, publishedAt }
 
 /// Extension methods for enums
 extension NewsCountryExtension on NewsCountry {
